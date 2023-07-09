@@ -1,6 +1,7 @@
   
 // The MIT License (MIT)
 //
+// Copyright (c) 2023 Jesiel Emerim Schardosim
 // Copyright (c) 2020 ihmc3jn09hk
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -50,7 +51,7 @@ TEST(jwtpp, check_expire) {
 
 	jwtpp::sp_jws jws;
 
-	EXPECT_NO_THROW(jws = jwtpp::jws::parse(bearer));
+	EXPECT_NO_THROW(jws = jwtpp::jws::parse(bearer, true));
   
 	auto now_t = std::chrono::system_clock::now();
 	auto now =std::chrono::system_clock::to_time_t(now_t);

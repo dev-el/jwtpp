@@ -1,5 +1,6 @@
 // The MIT License (MIT)
 //
+// Copyright (c) 2023 Jesiel Emerim Schardosim
 // Copyright (c) 2016-2020 Artur Troian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -70,7 +71,7 @@ TEST(jwtpp, sign_verify_rsa256) {
 
 	jwtpp::sp_jws jws;
 
-	EXPECT_NO_THROW(jws = jwtpp::jws::parse(bearer));
+	EXPECT_NO_THROW(jws = jwtpp::jws::parse(bearer, true));
 
 	EXPECT_TRUE(jws->verify(r256_pub));
 
@@ -83,13 +84,13 @@ TEST(jwtpp, sign_verify_rsa256) {
 	EXPECT_THROW(jws->verify(r512_pub, vf), std::exception);
 
 	bearer = "ghdfgddf";
-	EXPECT_THROW(jws = jwtpp::jws::parse(bearer), std::exception);
+	EXPECT_THROW(jws = jwtpp::jws::parse(bearer, true), std::exception);
 
 	bearer = "Bearer ";
-	EXPECT_THROW(jws = jwtpp::jws::parse(bearer), std::exception);
+	EXPECT_THROW(jws = jwtpp::jws::parse(bearer, true), std::exception);
 
 	bearer = "Bearer bla.bla.bla";
-	EXPECT_THROW(jws = jwtpp::jws::parse(bearer), std::exception);
+	EXPECT_THROW(jws = jwtpp::jws::parse(bearer, true), std::exception);
 }
 
 TEST(jwtpp, sign_verify_rsa384) {
@@ -117,7 +118,7 @@ TEST(jwtpp, sign_verify_rsa384) {
 
 	jwtpp::sp_jws jws;
 
-	EXPECT_NO_THROW(jws = jwtpp::jws::parse(bearer));
+	EXPECT_NO_THROW(jws = jwtpp::jws::parse(bearer, true));
 
 	EXPECT_TRUE(jws->verify(r384_pub));
 
@@ -130,13 +131,13 @@ TEST(jwtpp, sign_verify_rsa384) {
 	EXPECT_THROW(jws->verify(r512_pub, vf), std::exception);
 
 	bearer = "ghdfgddf";
-	EXPECT_THROW(jws = jwtpp::jws::parse(bearer), std::exception);
+	EXPECT_THROW(jws = jwtpp::jws::parse(bearer, true), std::exception);
 
 	bearer = "Bearer ";
-	EXPECT_THROW(jws = jwtpp::jws::parse(bearer), std::exception);
+	EXPECT_THROW(jws = jwtpp::jws::parse(bearer, true), std::exception);
 
 	bearer = "Bearer bla.bla.bla";
-	EXPECT_THROW(jws = jwtpp::jws::parse(bearer), std::exception);
+	EXPECT_THROW(jws = jwtpp::jws::parse(bearer, true), std::exception);
 }
 
 TEST(jwtpp, sign_verify_rsa512) {
@@ -164,7 +165,7 @@ TEST(jwtpp, sign_verify_rsa512) {
 
 	jwtpp::sp_jws jws;
 
-	EXPECT_NO_THROW(jws = jwtpp::jws::parse(bearer));
+	EXPECT_NO_THROW(jws = jwtpp::jws::parse(bearer, true));
 
 	EXPECT_TRUE(jws->verify(r512_pub));
 
@@ -177,13 +178,13 @@ TEST(jwtpp, sign_verify_rsa512) {
 	EXPECT_THROW(jws->verify(r256_pub, vf), std::exception);
 
 	bearer = "ghdfgddf";
-	EXPECT_THROW(jws = jwtpp::jws::parse(bearer), std::exception);
+	EXPECT_THROW(jws = jwtpp::jws::parse(bearer, true), std::exception);
 
 	bearer = "Bearer ";
-	EXPECT_THROW(jws = jwtpp::jws::parse(bearer), std::exception);
+	EXPECT_THROW(jws = jwtpp::jws::parse(bearer, true), std::exception);
 
 	bearer = "Bearer bla.bla.bla";
-	EXPECT_THROW(jws = jwtpp::jws::parse(bearer), std::exception);
+	EXPECT_THROW(jws = jwtpp::jws::parse(bearer, true), std::exception);
 }
 
 TEST(jwtpp, load_rsa_from_file) {

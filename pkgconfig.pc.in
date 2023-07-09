@@ -7,6 +7,6 @@ includedir=@CMAKE_INSTALL_PREFIX@/include
 Name: jwtpp
 Description: JSON Object Signing and Encryption library for C++
 Version: @VERSION@
-URL: https://github.com/troian/jwtpp
+URL: https://github.com/dev-el/jwtpp
 Libs: -L${libdir} -L${sharedlibdir} -ljwtpp
 Cflags: -I${includedir}

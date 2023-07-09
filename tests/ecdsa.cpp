@@ -1,5 +1,6 @@
 // The MIT License (MIT)
 //
+// Copyright (c) 2023 Jesiel Emerim Schardosim
 // Copyright (c) 2016-2020 Artur Troian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -63,7 +64,7 @@ TEST(jwtpp, sign_verify_ecdsa256) {
 
 	jwtpp::sp_jws jws;
 
-	EXPECT_NO_THROW(jws = jwtpp::jws::parse(bearer));
+	EXPECT_NO_THROW(jws = jwtpp::jws::parse(bearer, true));
 
 	EXPECT_TRUE(jws->verify(e256_pub));
 
@@ -78,11 +79,11 @@ TEST(jwtpp, sign_verify_ecdsa256) {
 #endif // defined(_MSC_VER) && (_MSC_VER < 1700)
 
 	bearer = "ghdfgddf";
-	EXPECT_THROW(jws = jwtpp::jws::parse(bearer), std::exception);
+	EXPECT_THROW(jws = jwtpp::jws::parse(bearer, true), std::exception);
 
 	bearer = "Bearer ";
-	EXPECT_THROW(jws = jwtpp::jws::parse(bearer), std::exception);
+	EXPECT_THROW(jws = jwtpp::jws::parse(bearer, true), std::exception);
 
 	bearer = "Bearer bla.bla.bla";
-	EXPECT_THROW(jws = jwtpp::jws::parse(bearer), std::exception);
+	EXPECT_THROW(jws = jwtpp::jws::parse(bearer, true), std::exception);
 }

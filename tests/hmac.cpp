@@ -1,5 +1,6 @@
 // The MIT License (MIT)
 //
+// Copyright (c) 2023 Jesiel Emerim Schardosim
 // Copyright (c) 2016-2020 Artur Troian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -54,7 +55,7 @@ TEST(jwtpp, sign_verify_hmac256)
 
 	jwtpp::sp_jws jws;
 
-	EXPECT_NO_THROW(jws = jwtpp::jws::parse(bearer));
+	EXPECT_NO_THROW(jws = jwtpp::jws::parse(bearer, true));
 
 	EXPECT_TRUE(jws->verify(h256));
 
@@ -72,13 +73,13 @@ TEST(jwtpp, sign_verify_hmac256)
 	EXPECT_THROW(jws->verify(h512), std::exception);
 
 	bearer = "ghdfgddf";
-	EXPECT_THROW(jws = jwtpp::jws::parse(bearer), std::exception);
+	EXPECT_THROW(jws = jwtpp::jws::parse(bearer, true), std::exception);
 
 	bearer = "Bearer ";
-	EXPECT_THROW(jws = jwtpp::jws::parse(bearer), std::exception);
+	EXPECT_THROW(jws = jwtpp::jws::parse(bearer, true), std::exception);
 
 	bearer = "Bearer bla.bla.bla";
-	EXPECT_THROW(jws = jwtpp::jws::parse(bearer), std::exception);
+	EXPECT_THROW(jws = jwtpp::jws::parse(bearer, true), std::exception);
 }
 
 TEST(jwtpp, sign_verify_hmac384)
@@ -95,7 +96,7 @@ TEST(jwtpp, sign_verify_hmac384)
 
 	jwtpp::sp_jws jws;
 
-	EXPECT_NO_THROW(jws = jwtpp::jws::parse(bearer));
+	EXPECT_NO_THROW(jws = jwtpp::jws::parse(bearer, true));
 
 	EXPECT_TRUE(jws->verify(h384));
 
@@ -113,13 +114,13 @@ TEST(jwtpp, sign_verify_hmac384)
 	EXPECT_THROW(jws->verify(h512), std::exception);
 
 	bearer = "ghdfgddf";
-	EXPECT_THROW(jws = jwtpp::jws::parse(bearer), std::exception);
+	EXPECT_THROW(jws = jwtpp::jws::parse(bearer, true), std::exception);
 
 	bearer = "Bearer ";
-	EXPECT_THROW(jws = jwtpp::jws::parse(bearer), std::exception);
+	EXPECT_THROW(jws = jwtpp::jws::parse(bearer, true), std::exception);
 
 	bearer = "Bearer bla.bla.bla";
-	EXPECT_THROW(jws = jwtpp::jws::parse(bearer), std::exception);
+	EXPECT_THROW(jws = jwtpp::jws::parse(bearer, true), std::exception);
 }
 
 TEST(jwtpp, sign_verify_hmac512)
@@ -136,7 +137,7 @@ TEST(jwtpp, sign_verify_hmac512)
 
 	jwtpp::sp_jws jws;
 
-	EXPECT_NO_THROW(jws = jwtpp::jws::parse(bearer));
+	EXPECT_NO_THROW(jws = jwtpp::jws::parse(bearer, true));
 
 	EXPECT_TRUE(jws->verify(h512));
 
@@ -154,12 +155,12 @@ TEST(jwtpp, sign_verify_hmac512)
 	EXPECT_THROW(jws->verify(h256), std::exception);
 
 	bearer = "ghdfgddf";
-	EXPECT_THROW(jws = jwtpp::jws::parse(bearer), std::exception);
+	EXPECT_THROW(jws = jwtpp::jws::parse(bearer, true), std::exception);
 
 	bearer = "Bearer ";
-	EXPECT_THROW(jws = jwtpp::jws::parse(bearer), std::exception);
+	EXPECT_THROW(jws = jwtpp::jws::parse(bearer, true), std::exception);
 
 	bearer = "Bearer bla.bla.bla";
-	EXPECT_THROW(jws = jwtpp::jws::parse(bearer), std::exception);
+	EXPECT_THROW(jws = jwtpp::jws::parse(bearer, true), std::exception);
 }
 

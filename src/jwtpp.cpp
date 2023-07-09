@@ -1,5 +1,6 @@
 // The MIT License (MIT)
 //
+// Copyright (c) 2023 Jesiel Emerim Schardosim
 // Copyright (c) 2016-2020 Artur Troian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,7 +25,7 @@
 
 namespace jwtpp {
 
-static const std::string bearer_hdr("bearer ");
+static const std::string bearer_hdr("Bearer ");
 
 jws::jws(alg_t a, const std::string &data, sp_claims cl, const std::string &sig)
 	: _alg(a)
@@ -54,25 +55,30 @@ bool jws::verify(sp_crypto c, verify_cb v) {
 	return true;
 }
 
-sp_jws jws::parse(const std::string &full_bearer) {
-	if (full_bearer.empty() || full_bearer.length() < bearer_hdr.length()) {
+sp_jws jws::parse(const std::string &full_content, bool with_bearer) {
+	if (full_content.empty() || ((full_content.length() < bearer_hdr.length()) && with_bearer)) {
 		throw std::invalid_argument("Bearer is invalid or empty");
 	}
 
-	for (size_t i = 0; i < bearer_hdr.length(); i++) {
+	std::string content;
 
-		if (bearer_hdr[i] != tolower(full_bearer[i])) {
-			throw std::invalid_argument("Bearer header is invalid");
+	if(with_bearer) {
+		for (size_t i = 0; i < bearer_hdr.length(); i++) {
+
+			if (tolower(bearer_hdr[i]) != tolower(full_content[i])) {
+				throw std::invalid_argument("Bearer header is invalid");
+			}
 		}
+		content = full_content.substr(bearer_hdr.length());
+	} else {
+		content = full_content;
 	}
 
-	std::string bearer = full_bearer.substr(bearer_hdr.length());
-
 	std::vector<std::string> tokens;
-	tokens = tokenize(bearer, '.');
+	tokens = tokenize(content, '.');
 
 	if (tokens.size() != 3) {
-		throw std::runtime_error("Bearer is invalid");
+		throw std::runtime_error("JWT is invalid");
 	}
 
 	Json::Value hdr;
@@ -140,7 +146,7 @@ std::string jws::sign_claims(class claims &cl, sp_crypto c) {
 }
 
 std::string jws::sign_bearer(class claims &cl, sp_crypto c) {
-	std::string bearer("Bearer ");
+	std::string bearer = bearer_hdr;
 	bearer += jws::sign_claims(cl, c);
 	return bearer;
 }

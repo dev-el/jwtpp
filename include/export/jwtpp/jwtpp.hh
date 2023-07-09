@@ -1,5 +1,6 @@
 // The MIT License (MIT)
 //
+// Copyright (c) 2023 Jesiel Emerim Schardosim
 // Copyright (c) 2016-2020 Artur Troian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,6 +23,7 @@
 
 #pragma once
 
+#include <json/value.h>
 #include <memory>
 #include <functional>
 #include <vector>
@@ -226,8 +228,6 @@ private:
 
 /**
 * \brief
-*
-* TODO https://github.com/troian/jwtpp/issues/38
 */
 class claims final {
 private:
@@ -294,6 +294,9 @@ private:
 	public:
 		explicit get(Json::Value *c) : _claims(c) {}
 	public:
+		Json::Value all() {
+			return *_claims;
+		}
 		std::string any(const std::string &key) {
 			return _claims->operator[](key).asString();
 		}
@@ -501,7 +504,7 @@ public:
 	 *
 	 * \return
 	 */
-	static sp_jws parse(const std::string &b);
+	static sp_jws parse(const std::string &content, bool with_bearer = false);
 
 	/**
 	 * \brief Sign content and return signature
